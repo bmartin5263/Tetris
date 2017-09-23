@@ -1,14 +1,15 @@
-'''
+"""
 Created on Jul 20, 2017
 
 @author: BrandonMartin
-'''
+"""
 
 from block import Block
 import curses
 
 
 class Board():
+
     MOVEMENTS = (curses.KEY_RIGHT, curses.KEY_DOWN, curses.KEY_LEFT)
     ROTATE = ord(' ')
     ORIGIN = [3, 20]
@@ -19,6 +20,8 @@ class Board():
         self.length = length
 
         self.board = None
+        self.nextGrid = None
+        self.afterGrid = None
 
         self.coordinates = [0, 0]
         self.currentBlock = None
@@ -34,6 +37,7 @@ class Board():
         self.newBoard()
 
     def newBoard(self):
+
         self.board = [None] * (self.height + 2)
         self.nextGrid = [None] * (2)
         self.afterGrid = [None] * (2)
@@ -89,14 +93,15 @@ class Board():
 
         if self.placeBlock(newBlock, newCoordinates):
 
-            ### The Block Can Be Placed At The New Spot ###
+            # The Block Can Be Placed At The New Spot #
 
             self.coordinates = newCoordinates
             self.currentBlock = newBlock
             if command == curses.KEY_DOWN:
                 result['valid'] = True
 
-            ### See if Block is At Bottm ###
+            # See if Block is At Bottom #
+
             self.removeBlock()
             testCoordinates = self.changeCoordinates(curses.KEY_DOWN, list(self.coordinates))
             if not self.canPlaceBlock(self.currentBlock, testCoordinates):
@@ -107,13 +112,13 @@ class Board():
         else:
             if command == curses.KEY_DOWN:
 
-                ### The Block Cannot Go Down Any Further ###
+                # The Block Cannot Go Down Any Further #
 
                 self.placeBlock(self.currentBlock, self.coordinates)
 
                 if self.extraTime and self.hasExtraTime:
 
-                    ### Allow Double Time for Repositioning At Higher Speeds ###
+                    # Allow Double Time for Repositioning At Higher Speeds #
 
                     curses.flash()
                     self.hasExtraTime = False
@@ -130,7 +135,7 @@ class Board():
                         result['end'] = not self.getNextBlock()
             else:
 
-                ### Block Cannot Be Moved Left/Right or Rotate
+                # Block Cannot Be Moved Left/Right or Rotate
 
                 self.placeBlock(self.currentBlock, self.coordinates)
 
@@ -220,10 +225,8 @@ class Board():
         self.afterBlock = Block()
         self.moveBlocks()
         self.coordinates = list(Board.ORIGIN)
-        if self.board[20] != ['X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X'] and self.board[21] != ['X', 'X', ' ',
-                                                                                                       ' ', ' ', ' ',
-                                                                                                       ' ', 'X', 'X',
-                                                                                                       'X']:
+        if self.board[20] != ['X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X'] and \
+           self.board[21] != ['X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X']:
             return False
         if not self.placeBlock(self.currentBlock, self.coordinates):
             return False

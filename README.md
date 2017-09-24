@@ -1,4 +1,4 @@
-# Uno Basic
+# Tetris
 Recreation of the classic Tetris game with text-based graphics. 
 Created during my Junior year at DePaul university, my goals with this project was to experiment with the curses module
 and threading to create a text-based non turn-based game that deals with user-input concurrently with computer input. 

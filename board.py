@@ -1,12 +1,5 @@
-"""
-Created on Jul 20, 2017
-
-@author: BrandonMartin
-"""
-
 from block import Block
 import curses
-
 
 class Board():
 
@@ -37,7 +30,6 @@ class Board():
         self.newBoard()
 
     def newBoard(self):
-
         self.board = [None] * (self.height + 2)
         self.nextGrid = [None] * (2)
         self.afterGrid = [None] * (2)
@@ -61,7 +53,6 @@ class Board():
         self.placeBlock(self.currentBlock, self.coordinates)
 
     def command(self, command):
-
         result = {'cells': [],
                   'score': 0,
                   'clear': [],

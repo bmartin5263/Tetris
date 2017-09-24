@@ -1,11 +1,4 @@
-'''
-Created on Jul 15, 2017
-
-@author: BrandonMartin
-'''
-
 import random
-
 
 class Block():
 

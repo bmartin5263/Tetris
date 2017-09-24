@@ -1,13 +1,6 @@
-'''
-Created on Jul 15, 2017
-
-@author: BrandonMartin
-'''
-
 from curses import wrapper
 from game import Game
 import sys
-
 
 def main(screen):
     startLevel = 1
@@ -19,7 +12,6 @@ def main(screen):
     g = Game(screen, startLevel)
     x = g.play()
     return x
-
 
 if __name__ == '__main__':
     sys.stdout.write("\x1b[8;32;26t")

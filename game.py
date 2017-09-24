@@ -1,14 +1,7 @@
-'''
-Created on Aug 21, 2017
-
-@author: BrandonMartin
-'''
-
 import threading
 import time
 import curses
 from board import Board
-
 
 class Game():
     # Locations for Data To Be Drawn

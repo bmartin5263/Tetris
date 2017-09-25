@@ -10,6 +10,9 @@ __Usage:__
 ```
 $ python3 main.py <starting_speed_level>
 ```
+
+__It is recommended to run Tetris in a Terminal using 15pt Andale Mono font to ensure proper spacing.__
+
 The Tetris repository includes the following python modules:
 * main.py
 * block.py

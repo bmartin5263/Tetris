@@ -76,7 +76,7 @@ class Game():
         curses.start_color()
         ### BLOCKS ###
         curses.init_pair(1, 15, curses.COLOR_BLACK)  # No Block / White Text
-        curses.init_pair(2, 15, 12)  # Blue Block
+        curses.init_pair(2, 15, 39)  # Blue Block
         curses.init_pair(3, 15, 11)  # Yellow Block
         curses.init_pair(4, 15, 208)  # Orange Block
         curses.init_pair(5, 15, 10)  # Green Block
@@ -86,7 +86,7 @@ class Game():
         curses.init_pair(16, 15, 199)  # Dead Block
         curses.init_pair(17, 9, 15)
         ### TEXT ###
-        curses.init_pair(9, 12, curses.COLOR_BLACK)  # Blue Text
+        curses.init_pair(9, 39, curses.COLOR_BLACK)  # Blue Text
         curses.init_pair(10, 11, curses.COLOR_BLACK)  # Yellow Text
         curses.init_pair(11, 208, curses.COLOR_BLACK)  # Orange Text
         curses.init_pair(12, 10, curses.COLOR_BLACK)  # Green Text
@@ -105,7 +105,7 @@ class Game():
         }
 
     def newGame(self):
-        '''Initializes Game with a blank Board and zero score.'''
+        """Initializes Game with a blank Board and zero score."""
 
         self.board = Board()
         self.screen.erase()
@@ -480,8 +480,8 @@ class Game():
         self.drawData()
 
     def createThreads(self):
-        '''Creates humanThread for user input and computerThread for automatic drops
-            & effects handling.'''
+        """Creates humanThread for user input and computerThread for automatic drops
+            & effects handling."""
         self.threads = []
         humanThread = threading.Thread(target=self.getInput, args=(0,))
         computerThread = threading.Thread(target=self.getInput, args=(1,))
@@ -489,7 +489,7 @@ class Game():
         self.threads.append(computerThread)
 
     def startThreads(self):
-        '''Starts humanThread and computerThread and waits for them to terminate.'''
+        """Starts humanThread and computerThread and waits for them to terminate."""
         self.lastCommandTime = time.time()
         for t in self.threads:
             t.start()
@@ -512,3 +512,6 @@ class Game():
             self.createThreads()
             self.startThreads()
         return (self.singles, self.doubles, self.triples, self.tetrises, self.score)
+
+if __name__ == '__main__':
+    print('USAGE: $ main.py <starting_level_speed>')

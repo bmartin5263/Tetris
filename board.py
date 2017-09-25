@@ -239,3 +239,6 @@ class Board():
             return self.nextGrid[coordinates[1]][coordinates[0]]
         elif board == 2:
             return self.afterGrid[coordinates[1]][coordinates[0]]
+
+if __name__ == '__main__':
+    print('USAGE: $ main.py <starting_level_speed>')

@@ -61,3 +61,6 @@ class Block():
             return bodies[0]
         else:
             return bodies[bodyIndex]
+
+if __name__ == '__main__':
+    print('USAGE: $ main.py <starting_level_speed>')

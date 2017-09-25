@@ -31,5 +31,6 @@ Each value is multiplied by the current speed level.
 * __left/right arrow -__ Move block left and right
 * __down arrow__ - Move block down
 * __space bar__ - Rotate block
+* __d__ - Drop block to the bottom
 * __p -__ Pause game
 * __q -__ Quit game

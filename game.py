@@ -13,9 +13,9 @@ class Game():
     SCORE_COR = (8, 26)
 
     LEGAL_INPUT = (curses.KEY_DOWN, curses.KEY_LEFT, curses.KEY_RIGHT, ord('q'), ord(' '), ord('p'),
-                   ord('t'), ord('y'))
+                   ord('t'), ord('y'), ord('d'))
 
-    BOARD_INPUT = (curses.KEY_DOWN, curses.KEY_LEFT, curses.KEY_RIGHT, ord(' '))
+    BOARD_INPUT = (curses.KEY_DOWN, curses.KEY_LEFT, curses.KEY_RIGHT, ord(' '), ord('d'))
 
     LEVEL_SCORES = (0, 0, 500, 2500, 7000, 15000, 30000, 60000, 100000, 150000, 220000)
     LEVEL_TIMES = (1000, 1.2, 1, .7, .5, .3, .2, .15, .1, .08, .06)
@@ -386,7 +386,6 @@ class Game():
         if idNum == 0:
             while not self.isComplete and not self.didLose:
                 command = self.getPlayerInput()
-                requestType = ''
                 if command in Game.LEGAL_INPUT:
                     if command in Game.BOARD_INPUT:
                         requestType = 'board'
@@ -450,6 +449,7 @@ class Game():
             if modifications['score']:
                 self.drawEntireBoard()
             else:
+                #self.drawEntireBoard()
                 self.updateBoard(modifications['cells'])
             if modifications['valid']:
                 self.lastCommandTime = time.time()

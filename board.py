@@ -76,59 +76,66 @@ class Board():
 
         result['cells'] = self.currentBlock.listBody(newCoordinates)
 
-        if command in Board.MOVEMENTS:
-            newCoordinates = self.changeCoordinates(command, newCoordinates)
-
-        elif command == Board.ROTATE:
-            newBlock = self.currentBlock.rotate()
-
-        if self.placeBlock(newBlock, newCoordinates):
-
-            # The Block Can Be Placed At The New Spot #
-
+        if command == ord('d'):
+            while self.placeBlock(self.currentBlock, newCoordinates):
+                self.coordinates = newCoordinates
+                self.removeBlock()
+                newCoordinates = self.changeCoordinates(curses.KEY_DOWN, newCoordinates)
+            newCoordinates = self.changeCoordinates(curses.KEY_UP, newCoordinates)
             self.coordinates = newCoordinates
-            self.currentBlock = newBlock
-            if command == curses.KEY_DOWN:
-                result['valid'] = True
-
-            # See if Block is At Bottom #
-
             self.removeBlock()
-            testCoordinates = self.changeCoordinates(curses.KEY_DOWN, list(self.coordinates))
-            if not self.canPlaceBlock(self.currentBlock, testCoordinates):
-                # curses.flash()
-                result['bottom'] = True
-            self.placeCurrentBlock()
+            self.placeBlock(self.currentBlock, newCoordinates)
+            result['cells'].extend(self.currentBlock.listBody(self.coordinates))
+            self.findRowsToClear()
+
+            result['clear'] = self.rowsToClear
+            result['valid'] = True
+            if not self.rowsToClear:
+                result['next'] = True
+                result['end'] = not self.getNextBlock()
 
         else:
-            if command == curses.KEY_DOWN:
 
-                # The Block Cannot Go Down Any Further #
+            if command in Board.MOVEMENTS:
+                newCoordinates = self.changeCoordinates(command, newCoordinates)
 
-                self.placeBlock(self.currentBlock, self.coordinates)
+            elif command == Board.ROTATE:
+                newBlock = self.currentBlock.rotate()
 
-                if self.extraTime and self.hasExtraTime:
+            if self.placeBlock(newBlock, newCoordinates):
 
-                    # Allow Double Time for Repositioning At Higher Speeds #
+                # The Block Can Be Placed At The New Spot #
 
-                    curses.flash()
-                    self.hasExtraTime = False
+                self.coordinates = newCoordinates
+                self.currentBlock = newBlock
+                if command == curses.KEY_DOWN:
                     result['valid'] = True
 
-                else:
-                    if self.extraTime:
-                        self.hasExtraTime = True
+                # See if Block is At Bottom #
+
+                self.removeBlock()
+                testCoordinates = self.changeCoordinates(curses.KEY_DOWN, list(self.coordinates))
+                if not self.canPlaceBlock(self.currentBlock, testCoordinates):
+                    result['bottom'] = True
+                self.placeCurrentBlock()
+
+            else:
+                if command == curses.KEY_DOWN:
+
+                    # The Block Cannot Go Down Any Further #
+
+                    self.placeBlock(self.currentBlock, self.coordinates)
                     self.findRowsToClear()
+
                     result['clear'] = self.rowsToClear
                     result['valid'] = True
-                    if self.rowsToClear == []:
+                    if not self.rowsToClear:
                         result['next'] = True
                         result['end'] = not self.getNextBlock()
-            else:
+                else:
+                    # Block Cannot Be Moved Left/Right or Rotate
 
-                # Block Cannot Be Moved Left/Right or Rotate
-
-                self.placeBlock(self.currentBlock, self.coordinates)
+                    self.placeBlock(self.currentBlock, self.coordinates)
 
         result['cells'].extend(self.currentBlock.listBody(self.coordinates))
         return result
@@ -140,6 +147,8 @@ class Board():
             coordinates[0] -= 1
         elif command == curses.KEY_RIGHT:
             coordinates[0] += 1
+        elif command == curses.KEY_UP:
+            coordinates[1] += 1
         return coordinates
 
     def canPlaceBlock(self, block, coordinates):
@@ -230,11 +239,3 @@ class Board():
             return self.nextGrid[coordinates[1]][coordinates[0]]
         elif board == 2:
             return self.afterGrid[coordinates[1]][coordinates[0]]
-
-    def enableExtraDropTime(self):
-        self.extraTime = True
-        self.hasExtraTime = True
-
-    def disableExtraDropTime(self):
-        self.extraTime = False
-        self.hasExtraTime = False

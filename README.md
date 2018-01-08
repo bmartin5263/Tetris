@@ -4,14 +4,15 @@ Created during my Junior year at DePaul university, my goals with this project w
 and threading to create a text-based non turn-based game that deals with user-input concurrently with computer input. 
 
 ## Getting Started
-__Language Version:__ Python 3.5
+__Language Version:__ Python 3
 
 __Usage:__
 ```
 $ python3 main.py <starting_speed_level>
 ```
 
-__It is recommended to run Tetris in a Terminal using 15pt Andale Mono font to ensure proper spacing.__
+__It is recommended to run Tetris in a Terminal using 15pt Andale Mono a similarly spaced font to ensure proper spacing
+between blocks.__
 
 The Tetris repository includes the following python modules:
 * main.py
